@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-ggdb -Wall -Wextra
+CFLAGS=-ggdb -Wall -Wextra -O0
 DEPS = shellfuncts.h
 OBJ = myshell.o shellfuncts.o 
 
