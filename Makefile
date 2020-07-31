@@ -1,13 +1,13 @@
 CC=gcc
-CFLAGS=-I -g -Wall -Wextra
+CFLAGS=-ggdb -Wall -Wextra
 DEPS = shellfuncts.h
 OBJ = myshell.o shellfuncts.o
 
 %.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 myshell: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: clean
 
