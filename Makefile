@@ -10,6 +10,8 @@ myshell: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: clean
+test:
+	gcc -o myshell myshell.c shellfuncts.c
 
 clean:
 	rm -f *.o *~ myshell 

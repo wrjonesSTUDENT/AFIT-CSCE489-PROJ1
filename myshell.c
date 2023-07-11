@@ -1,19 +1,43 @@
 /*************************************************************************************
- * myshell - student code for Project 1 of CSCE 489 
+ * myshell - wjonesSTUDENT code for Project 1 of CSCE 489
  *
  *************************************************************************************/
 
 #include <stdio.h>
 #include "shellfuncts.h"
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
-int main(int argv, const char *argc[]) {
-//	(void) argv; // Make compile warnings go away - be sure to delete this line if you use the param
-	(void) argc; // Make compile warnings go away - be sure to delete this line if you use the param
+void inputBuffer(const char* userInput) {
+    if (strcmp(userInput, "dir") == 0) {
+        //printf("dir command sent\n");
+        dir();
+    } else if (strcmp(userInput, "update") == 0) {
+        printf("update command sent\n");
+    } else if (strcmp(userInput, "list") == 0) {
+        printf("list command sent\n");
+    } else if (strcmp(userInput, "halt") == 0) {
+        printf("halt command sent\n");
+    } else if (strcmp(userInput, "create") == 0) {
+        printf("create command sent\n");
+    } else if (strcmp(userInput, "help") == 0) {
+        //printf("help command sent\n");
+        help();
+    } else if (strcmp(userInput, "banner") == 0) {
+        banner();
+    } else {
+        printf("invalid command, try entering \"help\" for available commands\n");
+    }
+}
+int main() {
+    char userInput[1];
 
-	// If they just ran myshell, say Hello World--if they included a parameter, speak Australian
-	if (argv == 1)
-		hello(1);
-	else
-		hello(0);
+    banner();
 
+    while (1) {
+        printf("Roscoe: ");
+        scanf("%s", userInput);
+        inputBuffer(userInput);
+    }
 }
