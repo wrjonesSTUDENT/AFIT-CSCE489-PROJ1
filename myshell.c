@@ -18,7 +18,8 @@ void inputBuffer(const char* userInput) {
     } else if (strcmp(userInput, "list") == 0) {
         printf("list command sent\n");
     } else if (strcmp(userInput, "halt") == 0) {
-        printf("halt command sent\n");
+        printf("roscoe shell exited\n");
+        halt();
     } else if (strcmp(userInput, "create") == 0) {
         printf("create command sent\n");
     } else if (strcmp(userInput, "help") == 0) {
@@ -32,9 +33,7 @@ void inputBuffer(const char* userInput) {
 }
 int main() {
     char userInput[1];
-
     banner();
-
     while (1) {
         printf("Roscoe: ");
         scanf("%s", userInput);

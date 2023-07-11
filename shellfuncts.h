@@ -8,4 +8,5 @@ int banner();
 void send_msg();
 int dir();
 int help();
+int halt();
 
