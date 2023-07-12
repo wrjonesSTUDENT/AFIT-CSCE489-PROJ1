@@ -9,7 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 
-void inputBuffer(const char* userInput) {
+void bufferToCommand(char userInput[25]) {
     if (strcmp(userInput, "dir") == 0) {
         //printf("dir command sent\n");
         dir();
@@ -32,11 +32,22 @@ void inputBuffer(const char* userInput) {
     }
 }
 int main() {
-    char userInput[1];
+    char buffer[25];
+    char userInput[25];
     banner();
     while (1) {
         printf("Roscoe: ");
-        scanf("%s", userInput);
-        inputBuffer(userInput);
+        fgets(buffer, 256, stdin);
+
+        int length = strlen(buffer);
+        if ((buffer[length -1 ]) == '\n') {
+            buffer[length - 1] = '\0';
+        }
+
+        int i = 0;
+        while (sscanf(buffer + i, "%s", userInput) == 1) {
+            bufferToCommand(userInput);
+            i += strlen(userInput) +1;
+    }
     }
 }
