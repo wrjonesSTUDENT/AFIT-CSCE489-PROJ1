@@ -123,8 +123,8 @@ int help() {
                "update - writes to a file\n"
                "list - list th contents of a file\n"
                "dir - lists the files in the current working directory\n"
-               "halt - exits the jonescorp shell\n"
-               "banner - prints the jonescorp (patent pending) banner\n"
+               "halt - exits the Roscoe shell\n"
+               "banner - prints the Roscoe (patent pending) banner\n"
                "*****************************************\n");
     } else {
         wait(NULL);
