@@ -82,7 +82,8 @@ int create(char arg1[]) {
 // update file2 10 “this is the first 10 lines” &
 // userCmd arg1 arg2 "arg3" arg4
 int update(char arg1[], char arg2[], char quotedString[]) {
-    int arg2Int = arg2[0];
+    // intiliaze the actual integer instead of the ASCII representation of a integer
+    int arg2Int = arg2[0] - '0';
     int child = fork();
     if (child == 0) {
         // i found this syntax on w3schools with fclose and fopen tutorials
@@ -94,6 +95,7 @@ int update(char arg1[], char arg2[], char quotedString[]) {
             fclose(fp);
             _exit(0);
         } else {
+            printf("add that line %d times\n", arg2Int);
             for (int i=0;i <= arg2Int;i++)
                 fprintf(fp, "%s\n", quotedString);
                 fflush(fp);

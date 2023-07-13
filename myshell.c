@@ -14,7 +14,9 @@ void bufferToCommand(char userCmd[256], char arg1[256], char arg2[256], char arg
         //printf("dir command sent\n");
         dir();
     } else if (strcmp(userCmd, "update") == 0) {
-        printf("update command sent\n");
+//        printf("update command sent\n");
+//        printf("print the array arg2 %s\n", arg2);
+//        printf("print the array[0] %d\n", arg2[0]);
         update(arg1, arg2, quotedString);
     } else if (strcmp(userCmd, "list") == 0) {
         list(arg1);
@@ -42,7 +44,7 @@ int main() {
         if ((buffer[length -1 ]) == '\n') {
             buffer[length - 1] = '\0';
         }
-        // make a bunch of variables for each chunk of a given user command
+        // make a bunch of variables for each chunk of expected user command inputs
         char userCmd[256];
         char arg1[256];
         char arg2[256];
