@@ -51,16 +51,24 @@ int banner() {
  *    Params:
  *
  *************************************************************************************/
-/* int create() {
+int create(char arg1[]) {
     int child = fork();
     if (child == 0) {
-        fopen("userArg", "w+");
-        printf()
+        // i found this syntax on w3schools with fclose and fopen tutorials
+        // specifically the if statement to check if a file already exists
+        FILE *fp;
+        if (fp = fopen(arg1, "r")) {
+            fclose(fp);
+            printf("this file already exists please choose a different filename\n");
+        } else {
+            fp = fopen(arg1, "w+");
+            fclose(fp);
+        }
     } else {
         wait(NULL);
         return 1;
     }
-    */
+}
 /*************************************************************************************
  * update - \<name\> \<number\> \<text\>
  *      Append lines of text to the named file. In particular, the text string \<text\>
