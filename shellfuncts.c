@@ -24,27 +24,6 @@ int banner() {
                  "*****************************************\n");
 }
 /*************************************************************************************
- * banner -
- *************************************************************************************/
-
-//int cmdPrompt() {
-    // scan for user input and executed other functions within shellfunts.c
-
-//}
-/*************************************************************************************
- * hello - sends hello world to the user! I'm doing proper function commenting so future
- *         coders might not find my code as painful.
- *
- *    Params:  param2 - not a very good parameter name - something better might be
- *                      say, msgstr or sendtext
- *
- *************************************************************************************/
-
-//void send_msg(const char *param2) {
-//	printf("%s", param2);
-//}
-
-/*************************************************************************************
  * create - \<name\>
  *      create a new file in the current directory with the given name.
  *      If the file already exists, print an error message on the workstation screen.
@@ -60,9 +39,11 @@ int create(char arg1[]) {
         if (fp = fopen(arg1, "r")) {
             fclose(fp);
             printf("this file already exists please choose a different filename\n");
+            _exit(0);
         } else {
             fp = fopen(arg1, "w+");
             fclose(fp);
+            _exit(0);
         }
     } else {
         wait(NULL);
@@ -78,7 +59,39 @@ int create(char arg1[]) {
  *    Params:
  *
  *************************************************************************************/
-
+//use fopen() to open file <name> for append (i.e., mode "a")
+//loop <number> times
+//use fprintf() to append the line <text> to the end of the file
+//use fflush() to force the file write to disk
+//        use sleep(strlen( <text>/5) to suspend the process for a few seconds
+//        use fclose() to close the file
+//print a message on the workstation screen saying that the update has completed (include the process id of this child process)
+//exit(0)
+// update file2 10 “this is the first 10 lines” &
+// userCmd arg1 arg2 "arg3" arg4
+int update(char arg1[], char arg2[], char arg3[], char arg4[]) {
+    int arg2Int = arg2[0];
+    int child = fork();
+    if (child == 0) {
+        // i found this syntax on w3schools with fclose and fopen tutorials
+        // specifically the if statement to check if a file already exists
+        FILE *fp;
+        fp = fopen(arg1, "a");
+        if (fp == NULL) {
+            printf("no such filename, did you make a typo?\n");
+            fclose(fp);
+            _exit(0);
+        } else {
+            for (int i=0;i <= arg2Int;i++)
+                fprintf(fp, "%s\n", arg3);
+                fflush(fp);
+            _exit(0);
+        }
+    } else {
+        wait(NULL);
+        return 1;
+    }
+}
 /*************************************************************************************
  * list - \<name\>
  *      Display the contents of the named file on the workstation screen.
@@ -87,6 +100,31 @@ int create(char arg1[]) {
  *    Params:
  *
  *************************************************************************************/
+//use fopen() to open file <name> for reading (i.e., mode "r")
+//if the file doesn't exist, then print an error message, and terminate the child process
+//use fclose() to close the file
+//use execl() to cat the file
+//exit(0)
+int list(char arg1[]) {
+    int child = fork();
+    if (child == 0) {
+        // i found this syntax on w3schools with fclose and fopen tutorials
+        // specifically the if statement to check if a file already exists
+        FILE *fp;
+        fp = fopen(arg1, "r");
+        if (fp == NULL) {
+            printf("no such filename, did you make a typo?\n");
+            fclose(fp);
+            _exit(0);
+        } else {
+            execl("/bin/cat", "cat", arg1, NULL);
+            _exit(0);
+        }
+    } else {
+        wait(NULL);
+        return 1;
+    }
+}
 
 /*************************************************************************************
  * dir - no args
@@ -100,11 +138,11 @@ int dir() {
     int child = fork();
     if (child == 0) {
         execl("/bin/ls", "ls", NULL);
+        _exit(0);
     } else {
         wait(NULL);
         return 1;
     }
-    //exit(0);
 }
 /*************************************************************************************
  * halt - no args
@@ -129,11 +167,12 @@ int help() {
                "*****************************************\n"
                "create - creates a new file\n"
                "update - writes to a file\n"
-               "list - list th contents of a file\n"
+               "list - list the contents of a file\n"
                "dir - lists the files in the current working directory\n"
                "halt - exits the Roscoe shell\n"
                "banner - prints the Roscoe (patent pending) banner\n"
                "*****************************************\n");
+        _exit(0);
     } else {
         wait(NULL);
         return 1;

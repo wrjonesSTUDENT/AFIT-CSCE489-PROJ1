@@ -10,4 +10,6 @@ int dir();
 int help();
 int halt();
 int create();
+int list();
+int update();
 
