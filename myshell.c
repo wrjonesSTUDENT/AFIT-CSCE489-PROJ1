@@ -9,13 +9,13 @@
 #include <string.h>
 #include <unistd.h>
 
-void bufferToCommand(char userCmd[256], char arg1[256], char arg2[256], char arg3[256], char arg4[256], char arg5[256]) {
+void bufferToCommand(char userCmd[256], char arg1[256], char arg2[256], char arg3[256], char arg4[256], char arg5[256], char quotedString[256]) {
     if (strcmp(userCmd, "dir") == 0) {
         //printf("dir command sent\n");
         dir();
     } else if (strcmp(userCmd, "update") == 0) {
         printf("update command sent\n");
-        update(arg1, arg2, arg3, arg4);
+        update(arg1, arg2, quotedString);
     } else if (strcmp(userCmd, "list") == 0) {
         list(arg1);
     } else if (strcmp(userCmd, "halt") == 0) {
@@ -49,10 +49,13 @@ int main() {
         char arg3[256];
         char arg4[256];
         char arg5[256];
-        //break up the buffer each time there is a space
-        // TODO figure out how to handle a string of quotes
+        char quotedString[256];
         // TODO figure out how to background a process with &
+        //search the buffer for any quoted strings
+        sscanf(buffer, "%*[^\"\n]\"%[^\"]\")", quotedString);
+        //break up the buffer each time there is a space
         sscanf(buffer, "%s %s %s %s %s %s", userCmd, arg1, arg2, arg3, arg4, arg5);
-        bufferToCommand(userCmd, arg1, arg2, arg3, arg4, arg5);
+        bufferToCommand(userCmd, arg1, arg2, arg3, arg4, arg5, quotedString);
+        clearInputArrays(userCmd, arg1, arg2, arg3, arg4, arg5, quotedString);
+        }
       }
-}

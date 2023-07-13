@@ -12,4 +12,4 @@ int halt();
 int create();
 int list();
 int update();
-
+int clearInputArrays();

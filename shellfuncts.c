@@ -7,6 +7,18 @@
 #include "shellfuncts.h"
 #include <unistd.h>
 #include <sys/wait.h>
+#include "string.h"
+
+// clears the input arrays after each command is run
+int clearInputArrays(char userCmd[], char arg1[], char arg2[], char arg3[], char arg4[], char arg5[], char quotedString[]) {
+    memset(userCmd, 0, 256);
+    memset(arg1, 0, 256);
+    memset(arg2, 0, 256);
+    memset(arg3, 0, 256);
+    memset(arg4, 0, 256);
+    memset(arg5, 0, 256);
+    memset(quotedString, 0, 256);
+}
 
 /*************************************************************************************
  * banner -
@@ -69,7 +81,7 @@ int create(char arg1[]) {
 //exit(0)
 // update file2 10 “this is the first 10 lines” &
 // userCmd arg1 arg2 "arg3" arg4
-int update(char arg1[], char arg2[], char arg3[], char arg4[]) {
+int update(char arg1[], char arg2[], char quotedString[]) {
     int arg2Int = arg2[0];
     int child = fork();
     if (child == 0) {
@@ -83,9 +95,9 @@ int update(char arg1[], char arg2[], char arg3[], char arg4[]) {
             _exit(0);
         } else {
             for (int i=0;i <= arg2Int;i++)
-                fprintf(fp, "%s\n", arg3);
+                fprintf(fp, "%s\n", quotedString);
                 fflush(fp);
-            _exit(0);
+                _exit(0);
         }
     } else {
         wait(NULL);
