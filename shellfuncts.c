@@ -96,7 +96,7 @@ int update(char arg1[], char arg2[], char quotedString[]) {
             _exit(0);
         } else {
             printf("add that line %d times\n", arg2Int);
-            for (int i=0;i <= arg2Int;i++)
+            for (int i=0;i < arg2Int;i++)
                 fprintf(fp, "%s\n", quotedString);
                 fflush(fp);
                 _exit(0);
