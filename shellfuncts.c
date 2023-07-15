@@ -90,8 +90,9 @@ int update(char arg1[], char arg2[], char quotedString[], int background) {
     // intiliaze the actual integer instead of the ASCII representation of a integer
     int arg2Int = atoi(&arg2[0]);
     int p_id = getpid();
-    printf("Process ID : %d\n", p_id);
+    printf("Shell Process ID : %d\n", p_id);
     int child = fork();
+    int status;
     if (child == 0) {
         // i found this syntax on w3schools with fclose and fopen tutorials
         // specifically the if statement to check if a file already exists
@@ -114,7 +115,7 @@ int update(char arg1[], char arg2[], char quotedString[], int background) {
             exit(0);
         }
     } else if (background == 0) {
-        wait(NULL);
+        waitpid(child, &status, WNOHANG);
         return 1;
     } else if (background == 1){
         return 1;
