@@ -12,13 +12,13 @@
 
 // clears the input arrays after each command is run
 int clearInputArrays(char userCmd[], char arg1[], char arg2[], char arg3[], char arg4[], char arg5[], char quotedString[]) {
-    memset(userCmd, 0, 256);
-    memset(arg1, 0, 256);
-    memset(arg2, 0, 256);
-    memset(arg3, 0, 256);
-    memset(arg4, 0, 256);
-    memset(arg5, 0, 256);
-    memset(quotedString, 0, 256);
+    memset(userCmd, '\0', 256);
+    memset(arg1, '\0', 256);
+    memset(arg2, '\0', 256);
+    memset(arg3, '\0', 256);
+    memset(arg4, '\0', 256);
+    memset(arg5, '\0', 256);
+    memset(quotedString, '\0', 256);
 }
 
 /*************************************************************************************
@@ -43,7 +43,7 @@ int banner() {
  *    Params:
  *
  *************************************************************************************/
-int create(char arg1[]) {
+int create(char arg1[], int background) {
     int child = fork();
     if (child == 0) {
         // i found this syntax on w3schools with fclose and fopen tutorials
@@ -56,10 +56,12 @@ int create(char arg1[]) {
         } else {
             fp = fopen(arg1, "w+");
             fclose(fp);
-            _exit(0);
+            exit(0);
         }
-    } else {
+    } else if (background == 0) {
         wait(NULL);
+        return 1;
+    } else if (background == 1){
         return 1;
     }
 }
@@ -82,7 +84,7 @@ int create(char arg1[]) {
 //exit(0)
 // update file2 10 “this is the first 10 lines” &
 // userCmd arg1 arg2 "arg3" arg4
-int update(char arg1[], char arg2[], char quotedString[]) {
+int update(char arg1[], char arg2[], char quotedString[], int background) {
     // intiliaze the actual integer instead of the ASCII representation of a integer
     int arg2Int = atoi(&arg2[0]);
     int child = fork();
@@ -93,8 +95,7 @@ int update(char arg1[], char arg2[], char quotedString[]) {
         fp = fopen(arg1, "a");
         if (fp == NULL) {
             printf("no such filename, did you make a typo?\n");
-            fclose(fp);
-            _exit(0);
+            exit(0);
         } else {
             printf("adding that line %d times\n", arg2Int);
             printf("after a quick 5 second nap\n");
@@ -103,10 +104,13 @@ int update(char arg1[], char arg2[], char quotedString[]) {
                 fprintf(fp, "%s\n", quotedString);
                 fflush(fp);
             }
-            _exit(0);
+            fclose(fp);
+            exit(0);
         }
-    } else {
+    } else if (background == 0) {
         wait(NULL);
+        return 1;
+    } else if (background == 1){
         return 1;
     }
 }
@@ -123,7 +127,7 @@ int update(char arg1[], char arg2[], char quotedString[]) {
 //use fclose() to close the file
 //use execl() to cat the file
 //exit(0)
-int list(char arg1[]) {
+int list(char arg1[], int background) {
     int child = fork();
     if (child == 0) {
         // i found this syntax on w3schools with fclose and fopen tutorials
@@ -132,14 +136,16 @@ int list(char arg1[]) {
         fp = fopen(arg1, "r");
         if (fp == NULL) {
             printf("no such filename, did you make a typo?\n");
-            fclose(fp);
-            _exit(0);
+            exit(0);
         } else {
             execl("/bin/cat", "cat", arg1, NULL);
-            _exit(0);
+            fclose(fp);
+            exit(0);
         }
-    } else {
+    } else if (background == 0) {
         wait(NULL);
+        return 1;
+    } else if (background == 1){
         return 1;
     }
 }
@@ -156,7 +162,8 @@ int dir() {
     int child = fork();
     if (child == 0) {
         execl("/bin/ls", "ls", NULL);
-        _exit(0);
+        printf("\n");
+        exit(0);
     } else {
         wait(NULL);
         return 1;
@@ -169,7 +176,7 @@ int dir() {
  *
  *************************************************************************************/
 int halt() {
-    _exit(0);
+    exit(0);
 }
 /*************************************************************************************
  * help -
@@ -190,7 +197,7 @@ int help() {
                "halt - exits the Roscoe shell\n"
                "banner - prints the Roscoe (patent pending) banner\n"
                "*****************************************\n");
-        _exit(0);
+        exit(0);
     } else {
         wait(NULL);
         return 1;
