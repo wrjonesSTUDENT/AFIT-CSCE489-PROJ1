@@ -44,6 +44,8 @@ int banner() {
  *
  *************************************************************************************/
 int create(char arg1[], int background) {
+    int p_id = getpid();
+    printf("Process ID : %d\n", p_id);
     int child = fork();
     if (child == 0) {
         // i found this syntax on w3schools with fclose and fopen tutorials
@@ -87,10 +89,14 @@ int create(char arg1[], int background) {
 int update(char arg1[], char arg2[], char quotedString[], int background) {
     // intiliaze the actual integer instead of the ASCII representation of a integer
     int arg2Int = atoi(&arg2[0]);
+    int p_id = getpid();
+    printf("Process ID : %d\n", p_id);
     int child = fork();
     if (child == 0) {
         // i found this syntax on w3schools with fclose and fopen tutorials
         // specifically the if statement to check if a file already exists
+        int p_id = getpid();
+        printf("Update Process ID : %d\n", p_id);
         FILE *fp;
         fp = fopen(arg1, "a");
         if (fp == NULL) {
@@ -98,12 +104,12 @@ int update(char arg1[], char arg2[], char quotedString[], int background) {
             exit(0);
         } else {
             printf("adding that line %d times\n", arg2Int);
-            printf("after a quick 5 second nap\n");
-            sleep(5);
+            printf("after a quick %d second nap\n", arg2Int);
             for (int i = 0; i < arg2Int; i++) {
                 fprintf(fp, "%s\n", quotedString);
                 fflush(fp);
             }
+            sleep(arg2Int);
             fclose(fp);
             exit(0);
         }

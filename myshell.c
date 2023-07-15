@@ -9,6 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <sys/wait.h>
 
 void bufferToCommand(char userCmd[256], char arg1[256], char arg2[256], char arg3[256], char arg4[256], char arg5[256], char quotedString[256], int background) {
     if (strcmp(userCmd, "dir") == 0) {
@@ -42,7 +43,6 @@ int main() {
         //reads stdin stream and puts in a character buffer
         if (fgets(buffer, 256, stdin) != NULL) {
             //measure the length of the buffer array and find the carriage return and replace with a \0
-            printf(buffer);
             int length = strlen(buffer);
             if ((buffer[length - 2]) == '&') {
                 background = 1;
@@ -65,6 +65,7 @@ int main() {
             bufferToCommand(userCmd, arg1, arg2, arg3, arg4, arg5, quotedString, background);
             clearInputArrays(userCmd, arg1, arg2, arg3, arg4, arg5, quotedString);
             fflush(stdin);
+            wait(NULL);
         }
         memset(buffer, '\0', 256);
     }
