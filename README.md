@@ -2,6 +2,9 @@
 This project is my first program ever coded in C.  I named it after my cat Roscoe as he accompanied me on this long journey of learning to use an IDE and writing a program in C.
 The Roscoe Interactive Shell has 7 major functions.
 
+![roscoe](https://github.com/wrjonesSTUDENT/AFIT-CSCE489-PROJ1/assets/138234445/69375150-2962-4c67-934f-a51ca57a14dc)
+
+
 ### CREATE
 
 create - list \<file\>.   creates a new file.
