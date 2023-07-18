@@ -31,7 +31,7 @@ banner - reprints the Welcome Banner
 
 ### &
 
-Background a process
+Background a process, it seems to work with list and dir but when using update I believe it successfully backgrounds a process but you dont immediately get your shell back.  I spent about 4-5 unproductive hours trying to get this to work.  Please be kind this is my 1st C program.
 
 ## How to Run
 download myshell.c, shellfuncts.c, shellfuncts.h, and Makefile into whatever directory you would like to run the shell from.
